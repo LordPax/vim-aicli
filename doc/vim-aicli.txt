@@ -1,0 +1,67 @@
+*vim-aicli* AI Text Assistant Plugin
+
+Author: LordPax
+
+DESCRIPTION
+
+This plugin provides AI assistance features for Vim,
+allowing users to interact with a language model
+directly from the editor.
+
+CONFIGURATION
+
+g:aicliprg         - Path to aicli executable (default: "aicli")
+
+g:ai_text_history  - Default history name (default: "default")
+g:ai_text_sdk      - SDK to use (optional)
+g:ai_text_model    - Model to use (optional)
+g:ai_text_temp     - Temperature for generation (optional)
+
+g:ai_translate_sdk - SDK to use (optional)
+
+COMMANDS
+
+*:AiText* [instruction]
+  Generates text based on the given instruction. If no instruction
+  is provided, opens a terminal for direct interaction.
+  With visual selection, uses the selected text as context.
+  Usage: :[range]AiText [instruction]
+  Options:
+    !  - Inserts result after selection instead of replacing it
+
+*:AiAddFile* [files...]
+  Adds one or more files to the context history.
+  Usage: :AiAddFile file1 [file2 ...]
+
+*:AiAddContext* <context>
+  Adds context to the history.
+  Usage: :AiAddContext Here's some additional context
+
+*:AiClearHistory*
+  Clears context history.
+
+*:AiHistory* [name]
+  Displays or sets the name of the current history.
+  Without argument, displays the current history name.
+  With an argument, sets a new history name.
+  Usage: :AiHistory [new_name]
+
+*:AiTranslate* <target_language> [source_language]
+  Translates the selected text or entire buffer to the specified target
+  language.
+  If a source language is provided, it will be used as the source for
+  translation.
+  Usage: :[range]AiTranslate <target_language> [source_language]
+  Example: :AiTranslate fr
+           :'<,'>AiTranslate es en
+
+EXAMPLE OF USE
+
+:AiText Explains the concept of recursion
+:AiAddFile README.md
+:AiAddContext We're working on a task management project
+:AiHistory project_tasks
+:AiTranslate fr en
+
+Note: Make sure that the 'aicli' executable is correctly installed
+and accessible in your PATH, or specify its full path in g:aicliprg.
