@@ -158,13 +158,26 @@ function! AiAddFile(...)
     echo "Files added in history"
 endfunction
 
-function! AiAddContext(context)
-    call CmdText("", a:context, [], 1)
+function! AiAddContext(is_selection, ...) range
+    let l:instruction = a:0 ? a:1 : ""
+
+    let l:context = a:is_selection
+        \? join(getline(a:firstline, a:lastline), "\n")
+        \: l:instruction
+
+    call CmdText("", l:context, [], 1)
     echo "Context added in history"
 endfunction
 
 function! AiClearHistory()
-    let l:cmd = g:aicliprg." t -c"
+    let l:cmd = g:aicliprg." text"
+
+    if exists("g:ai_text_history") && g:ai_text_history != ""
+        let l:cmd .= " -H ".g:ai_text_history
+    endif
+
+    let l:cmd .= " -c"
+
     call system(l:cmd)
 
     if v:shell_error != 0
@@ -187,7 +200,7 @@ endfunction
 
 command! -bang -range -nargs=? AiText <line1>,<line2>call AiText(<bang>0, <range>, <f-args>)
 command! -nargs=+ -complete=file AiAddFile call AiAddFile(<f-args>)
-command! -nargs=1 AiAddContext call AiAddContext(<f-args>)
+command! -range -nargs=? AiAddContext <line1>,<line2>call AiAddContext(<range>, <f-args>)
 command! -nargs=0 AiClearHistory call AiClearHistory()
 command! -nargs=* AiHistory call AiHistory(<f-args>)
 command! -range -nargs=* AiTranslate <line1>,<line2>call AiTranslate(<range>, <f-args>)

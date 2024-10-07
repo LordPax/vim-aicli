@@ -33,9 +33,9 @@ COMMANDS
   Adds one or more files to the context history.
   Usage: :AiAddFile file1 [file2 ...]
 
-*:AiAddContext* <context>
+*:AiAddContext* [context]
   Adds context to the history.
-  Usage: :AiAddContext Here's some additional context
+  Usage: :[range]AiAddContext [context]
 
 *:AiClearHistory*
   Clears context history.
