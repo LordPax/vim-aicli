@@ -169,7 +169,7 @@ function! AiAddContext(is_selection, ...) range
     echo "Context added in history"
 endfunction
 
-function! AiClearHistory()
+function! AiHistoryClear()
     let l:cmd = g:aicliprg." text"
 
     if exists("g:ai_text_history") && g:ai_text_history != ""
@@ -198,9 +198,23 @@ function! AiHistory(name = "")
     echo "History updated"
 endfunction
 
+function! AiHistoryList()
+    let l:cmd = g:aicliprg." text -L"
+
+    let l:result = system(l:cmd)
+
+    if v:shell_error != 0
+        echohl ErrorMsg | echomsg l:result | echohl None
+        return
+    endif
+
+    echo l:result
+endfunction
+
 command! -bang -range -nargs=? AiText <line1>,<line2>call AiText(<bang>0, <range>, <f-args>)
 command! -nargs=+ -complete=file AiAddFile call AiAddFile(<f-args>)
 command! -range -nargs=? AiAddContext <line1>,<line2>call AiAddContext(<range>, <f-args>)
-command! -nargs=0 AiClearHistory call AiClearHistory()
 command! -nargs=* AiHistory call AiHistory(<f-args>)
+command! -nargs=0 AiHistoryClear call AiHistoryClear()
+command! AiHistoryList call AiHistoryList()
 command! -range -nargs=* AiTranslate <line1>,<line2>call AiTranslate(<range>, <f-args>)

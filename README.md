@@ -39,16 +39,18 @@ let g:ai_text_temp = "0.7"
 - `:[range]AiText [instruction]` - Use selected text as context for generation
 - `:AiText!` - Insert generated text after selection instead of replacing it
 
+### Context Management and History for Text Generation
+
+- `:AiAddFile <file1> [file2] ...` - Add files to context
+- `:AiAddContext [context]` - Add custom context
+- `:[range]AiAddContext` - Use selected text as context
+- `:AiHistoryClear` - Clear context history
+- `:AiHistoryList` - List available history names
+- `:AiHistory [name]` - Set or display history name
+
 ### Translation
 
 - `:[range]AiTranslate <target> [source]` - Translate text
-
-### Context Management
-
-- `:AiAddFile <file1> [file2] ...` - Add files to context
-- `:AiAddContext <context>` - Add custom context
-- `:AiClearHistory` - Clear context history
-- `:AiHistory [name]` - Set or display history name
 
 ## Examples
 

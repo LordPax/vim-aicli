@@ -37,21 +37,25 @@ COMMANDS
   Adds context to the history.
   Usage: :[range]AiAddContext [context]
 
-*:AiClearHistory*
-  Clears context history.
-
 *:AiHistory* [name]
   Displays or sets the name of the current history.
   Without argument, displays the current history name.
   With an argument, sets a new history name.
   Usage: :AiHistory [new_name]
 
-*:AiTranslate* <target_language> [source_language]
+*:AiHistoryClear*
+  Clears context history.
+
+*:AiHistoryList*
+  Lists all available histories.
+  Usage: :AiHistoryList
+
+*:AiTranslate* <target> [source]
   Translates the selected text or entire buffer to the specified target
   language.
   If a source language is provided, it will be used as the source for
   translation.
-  Usage: :[range]AiTranslate <target_language> [source_language]
+  Usage: :[range]AiTranslate <target> [source]
   Example: :AiTranslate fr
            :'<,'>AiTranslate es en
 
