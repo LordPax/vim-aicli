@@ -33,6 +33,10 @@ let g:ai_text_temp = "0.7"
 
 ## Usage
 
+### General
+
+- `:AiSdk [sdk]` - Set or display the SDK
+
 ### Text Generation
 
 - `:AiText [instruction]` - Generate text based on the instruction

@@ -21,6 +21,12 @@ g:ai_translate_sdk - SDK to use (optional)
 
 COMMANDS
 
+*:AiSdk* [name]
+  Displays or sets the SDK to use.
+  Without argument, displays the current SDK.
+  With an argument, sets a new SDK.
+  Usage: :AiSdk [new_sdk]
+
 *:AiText* [instruction]
   Generates text based on the given instruction. If no instruction
   is provided, opens a terminal for direct interaction.

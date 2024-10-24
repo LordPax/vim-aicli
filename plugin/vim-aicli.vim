@@ -1,5 +1,6 @@
 let g:aicliprg="aicli"
 let g:ai_text_history="default"
+let g:ai_text_sdk="claude"
 
 function! CmdTextPrepare(prompt = "", context = "", files = [], inerte = 0)
     let l:cmd = g:aicliprg." text"
@@ -211,10 +212,21 @@ function! AiHistoryList()
     echo l:result
 endfunction
 
+function! AiSdk(name = "")
+    if a:name == ""
+        echo "SDK : ".g:ai_text_sdk
+        return
+    endif
+
+    let g:ai_text_sdk = a:name
+    echo "SDK updated"
+endfunction
+
 command! -bang -range -nargs=? AiText <line1>,<line2>call AiText(<bang>0, <range>, <f-args>)
 command! -nargs=+ -complete=file AiAddFile call AiAddFile(<f-args>)
 command! -range -nargs=? AiAddContext <line1>,<line2>call AiAddContext(<range>, <f-args>)
 command! -nargs=* AiHistory call AiHistory(<f-args>)
 command! -nargs=0 AiHistoryClear call AiHistoryClear()
 command! AiHistoryList call AiHistoryList()
+command! -nargs=* AiSdk call AiSdk(<f-args>)
 command! -range -nargs=* AiTranslate <line1>,<line2>call AiTranslate(<range>, <f-args>)
