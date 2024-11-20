@@ -33,7 +33,7 @@ COMMANDS
   With visual selection, uses the selected text as context.
   Usage: :[range]AiText [instruction]
   Options:
-    !  - Inserts result after selection instead of replacing it
+    ! - Use the entire buffer as context
 
 *:AiAddFile* [files...]
   Adds one or more files to the context history.

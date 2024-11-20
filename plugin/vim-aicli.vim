@@ -1,6 +1,8 @@
 let g:aicliprg="aicli"
-let g:ai_text_history="default"
-let g:ai_text_sdk="claude"
+let g:ai_text_history=get(g:, 'ai_text_history', 'default')
+let g:ai_text_sdk=get(g:, 'ai_text_sdk', 'claude')
+let g:ai_text_model=get(g:, 'ai_text_model', '')
+let g:ai_text_temp=get(g:, 'ai_text_temp', '')
 
 function! CmdTextPrepare(prompt = "", context = "", files = [], inerte = 0)
     let l:cmd = g:aicliprg." text"
@@ -122,6 +124,9 @@ function! AiText(bang, is_selection, ...) range
         if a:is_selection
             let l:lines = join(getline(a:firstline, a:lastline), "\n")
             call CmdText("", l:lines, [], 1)
+        elseif a:bang == 1
+            let l:lines = join(getline(1, "$"), "\n")
+            call CmdText("", l:lines, [], 1)
         endif
 
         let l:cmd = CmdTextPrepare()
@@ -132,12 +137,11 @@ function! AiText(bang, is_selection, ...) range
     if a:is_selection
         let l:lines = join(getline(a:firstline, a:lastline), "\n")
         let l:cmd = CmdTextPrepare(l:instruction, l:lines)
-
-        let l:exec = a:bang == 0
-            \? "normal! ".a:firstline."GV".a:lastline."Gc"
-            \: "normal! ".a:lastline."Go"
-
-        execute l:exec
+        execute "normal! ".a:firstline."GV".a:lastline."Gd"
+    elseif a:bang == 1
+        let l:lines = join(getline(1, "$"), "\n")
+        let l:cmd = CmdTextPrepare(l:instruction, l:lines)
+        execute "normal! ggVGd"
     else
         let l:cmd = CmdTextPrepare(l:instruction)
     endif
