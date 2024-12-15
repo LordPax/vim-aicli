@@ -25,6 +25,7 @@ Plug 'LordPax/vim-aicli'
 Add these lines to your `.vimrc`, only if you want a different config for vim :
 
 ```viml
+let g:aicliprg = "aicli"
 let g:ai_text_history = "default"
 let g:ai_text_sdk = "your_sdk"
 let g:ai_text_model = "your_model"
