@@ -1,4 +1,4 @@
-let g:aicliprg="aicli"
+let g:aicliprg=get(g:, 'aicliprg', 'aicli')
 let g:ai_text_history=get(g:, 'ai_text_history', 'default')
 let g:ai_text_sdk=get(g:, 'ai_text_sdk', 'claude')
 let g:ai_text_model=get(g:, 'ai_text_model', '')
@@ -134,14 +134,14 @@ function! AiText(bang, is_selection, ...) range
         return
     endif
 
+    let l:original_text = ""
+
     if a:is_selection
-        let l:lines = join(getline(a:firstline, a:lastline), "\n")
-        let l:cmd = CmdTextPrepare(l:instruction, l:lines)
-        execute "normal! ".a:firstline."GV".a:lastline."Gd"
+        let l:original_text = join(getline(a:firstline, a:lastline), "\n")
+        let l:cmd = CmdTextPrepare(l:instruction, l:original_text)
     elseif a:bang == 1
-        let l:lines = join(getline(1, "$"), "\n")
-        let l:cmd = CmdTextPrepare(l:instruction, l:lines)
-        execute "normal! ggVGd"
+        let l:original_text = join(getline(1, "$"), "\n")
+        let l:cmd = CmdTextPrepare(l:instruction, l:original_text)
     else
         let l:cmd = CmdTextPrepare(l:instruction)
     endif
@@ -149,13 +149,22 @@ function! AiText(bang, is_selection, ...) range
     echo "Processing please wait ..."
     let l:result = system(l:cmd)
 
-    if v:shell_error != 0
+    if v:shell_error != 0 || l:result == "[ERROR] Overloaded"
         echohl ErrorMsg | echomsg l:result | echohl None
         return
     endif
 
-    let l:insert = a:is_selection ? "i" : "o"
-    execute "normal! ".l:insert.l:result
+    let l:linesAfter = split(l:result, "\n")
+
+    if a:is_selection
+        execute a:firstline.",".a:lastline."delete _"
+        call append(a:firstline - 1, l:linesAfter)
+    elseif a:bang == 1
+        execute "1,".line("$")."delete _"
+        call append(0, l:linesAfter)
+    else
+        call append(line('.'), l:linesAfter)
+    endif
 endfunction
 
 function! AiAddFile(...)
