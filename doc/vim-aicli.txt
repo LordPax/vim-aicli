@@ -19,13 +19,15 @@ g:ai_text_temp     - Temperature for generation (optional)
 
 g:ai_translate_sdk - SDK to use (optional)
 
-COMMANDS
+GENERAL COMMANDS
 
 *:AiSdk* [name]
   Displays or sets the SDK to use.
   Without argument, displays the current SDK.
   With an argument, sets a new SDK.
   Usage: :AiSdk [new_sdk]
+
+TEXT GENERATION AND CONTEXT
 
 *:AiText* [instruction]
   Generates text based on the given instruction. If no instruction
@@ -55,6 +57,8 @@ COMMANDS
 *:AiHistoryList*
   Lists all available histories.
   Usage: :AiHistoryList
+
+TRANSLATION
 
 *:AiTranslate* <target> [source]
   Translates the selected text or entire buffer to the specified target

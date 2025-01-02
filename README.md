@@ -40,9 +40,10 @@ let g:ai_text_temp = "0.7"
 
 ### Text Generation
 
+- `:AiText` - Generate text interactively
 - `:AiText [instruction]` - Generate text based on the instruction
 - `:[range]AiText [instruction]` - Use selected text as context for generation
-- `:AiText!` - Insert generated text after selection instead of replacing it
+- `:AiText! [instruction]` - Use the entire buffer as context
 
 ### Context Management and History for Text Generation
 
